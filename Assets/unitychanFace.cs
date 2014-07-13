@@ -23,6 +23,11 @@ public class unitychanFace : MonoBehaviour {
 
 	void FaceChange()
 	{
+		var go = GameObject.Find("Main Camera").GetComponent<Transform> ();
+		var head = GameObject.Find("Character1_Head").GetComponent<Transform> ();
+		go.position = new Vector3 (0, 0, 0.7f) + head.position;
+		anim.SetLayerWeight (1, 1);
+
 		faceName = faceNames[faceCount];
 		anim.CrossFade(faceName + "@unitychan", fadeTime);
 		faceCount = (faceCount + 1) % faceNames.Length;
@@ -31,8 +36,10 @@ public class unitychanFace : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
-		anim.SetLayerWeight (1, 1);
 		FaceChange();
+
+
+
 	}
 	
 	// Update is called once per frame

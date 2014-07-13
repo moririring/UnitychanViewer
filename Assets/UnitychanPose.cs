@@ -20,6 +20,11 @@ public class UnitychanPose : MonoBehaviour {
 	{
 		if ( GUI.Button( new Rect(10, 40, 100, 20), animName ) )
 		{
+			var go = GameObject.Find("Main Camera").GetComponent<Transform> ();
+			go.position = new Vector3 (0, 2.0f, 1.0f);
+
+			anim.runtimeAnimatorController = Resources.Load ("Animators/UnityChanARPose") as RuntimeAnimatorController;
+
 			animCount = (animCount + 1) % 31;
 			animName = string.Format("POSE{0:00}", animCount + 1);
 			anim.CrossFade(animName, fadeTime);
