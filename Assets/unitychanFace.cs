@@ -4,32 +4,45 @@ using System.Collections;
 public class unitychanFace : MonoBehaviour {
 
 	private Animator anim;
-	private int faceCount = 0;
-	private string faceName = "POSE01";
+	private int faceCount;
+	private string faceName;
 	public float fadeTime = 3;
+	static readonly string[] faceNames = 
+	{
+		"angry1",
+		"angry2",
+		"conf",
+		"default",
+		"disstract1",
+		"disstract2",
+		"eye_close",
+		"sap",
+		"smile1",
+		"smile2",
+	};
+
+	void FaceChange()
+	{
+		faceName = faceNames[faceCount];
+		anim.CrossFade(faceName + "@unitychan", fadeTime);
+		faceCount = (faceCount + 1) % faceNames.Length;
+	}
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
 		anim.SetLayerWeight (1, 1);
-
+		FaceChange();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown ("Fire1")) {
-			anim.CrossFade("eye_close@unitychan", fadeTime);
-		}
-
-
-/*
-		if ( GUI.Button( new Rect(10, 40, 100, 20), animName ) )
-		{
-			animCount = (animCount + 1) % 31;
-			animName = string.Format("POSE{0:00}", animCount + 1);
-			anim.CrossFade(animName, fadeTime);
-		}
-		*/
 	}
-
+	void OnGUI()
+	{
+		if ( GUI.Button( new Rect(10, 70, 100, 20), faceName ) )
+		{
+			FaceChange();
+		}
+	}
 }
